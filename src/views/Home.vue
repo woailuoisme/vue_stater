@@ -1,18 +1,19 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-container class="fill-height" fruid>
+    <v-row>
+      <v-col cols="12">
+        <pagenate />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import pagenate from "../components/shared/pagenation";
 
 export default {
-  name: 'home',
   components: {
-    HelloWorld
+    pagenate
   }
-}
+};
 </script>
