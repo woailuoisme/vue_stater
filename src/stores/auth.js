@@ -1,74 +1,63 @@
+// import auth from "../api/auth.service";
+import authService from "../api/auth.service";
+import router from "../router/router";
+import api from '../api/api'
 export default {
-  state: {
-    user: null,
-    token: null,
-  },
-  mutations: {
-    setUser(state, payload) {
-      state.user = payload;
+    namespaced: true,
+    state: {
+        user: null,
+        token: ''
     },
-  },
-  actions: {
-    signUserUp({ commit }, payload) {
-      commit('setLoading', true);
-      commit('clearError');
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setLoading', false);
-          const newUser = {
-            id: user.uid,
-            registeredMeetups: [],
-          };
-          commit('setUser', newUser);
-        })
-        .catch((error) => {
-          commit('setLoading', false);
-          commit('setError', error);
-          console.log(error);
-        });
+    mutations: {
+        LOGOUT_USER(state) {
+            state.user = {};
+            state.token = '';
+            window.localStorage.user = JSON.stringify({});
+        },
+        SET_CURRENT_USER(state, user) {
+            state.user = user;
+            window.localStorage.user = JSON.stringify(user);
+        }
     },
-    signUserIn({ commit }, payload) {
-      commit('setLoading', true);
-      commit('clearError');
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setLoading', false);
-          const newUser = {
-            id: user.uid,
-            registeredMeetups: [],
-          };
-          commit('setUser', newUser);
-        })
-        .catch((error) => {
-          commit('setLoading', false);
-          commit('setError', error);
-          console.log(error);
-        });
+    actions: {
+        async login({commit, dispatch}, loginInfo) {
+            try {
+                let response = await api().post("/auth/login", loginInfo);
+                let user = response.data.data;
+                commit("SET_CURRENT_USER", user);
+                return user;
+            } catch {
+                return {
+                    error: "Email/password combination was incorrect.  Please try again."
+                };
+            }
+        },
+        async register({commit, dispatch}, registerInfo) {
+            try {
+                let response = await api().post("/auth/signup", registerInfo);
+                let user = response.data.data;
+                commit("SET_CURRENT_USER", user);
+                return user;
+            } catch {
+                return {error: "There was an error.  Please try again."};
+            }
+        },
+        async logout({commit}) {
+            try {
+                let response = await api(true).post("/auth/logout");
+                commit("LOGOUT_USER");
+                return {message: "user logout successfully"};
+            } catch {
+                return {error: "There was an error.  Please try again."};
+            }
+        }
     },
-    autoSignIn({ commit }, payload) {
-      commit('setUser', { id: payload.uid, registeredMeetups: [] });
-    },
-    logout({ commit }) {
-      firebase.auth().signOut();
-      commit('setUser', null);
-    },
-    clearError({ commit }) {
-      commit('clearError');
-    },
-  },
-  getters: {
-    user(state) {
-      return state.user;
-    },
-    userIsAuthenticated(state) {
-      return (
-        state.user !== null &&
-        state.user !== undefined
-      );
-    },
-  },
+    getters: {
+        user(state) {
+            return state.user;
+        },
+        userIsAuthenticated(state) {
+            return state.user !== null && state.user !== undefined;
+        }
+    }
 };

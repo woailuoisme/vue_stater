@@ -1,35 +1,68 @@
 // import '@mdi/font/css/materialdesignicons.css'
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
-import 'vuetify/dist/vuetify.min.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import '@mdi/font/css/materialdesignicons.min.css'
-import colors from 'vuetify/lib/util/colors'
+import Vue from "vue";
+import Vuetify, {VSnackbar, VBtn, VIcon} from "vuetify/lib";
+import "vuetify/dist/vuetify.min.css";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "@mdi/font/css/materialdesignicons.min.css";
+import colors from "vuetify/lib/util/colors";
 
-import zhHans from 'vuetify/lib/locale/zh-Hans'
-import en from 'vuetify/lib/locale/en'
+import zhHans from "vuetify/lib/locale/zh-Hans";
+import en from "vuetify/lib/locale/en";
+import VuetifyToast from 'vuetify-toast-snackbar'
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+    components: {
+        VSnackbar,
+        VBtn,
+        VIcon
+    }
+});
+Vue.use(VuetifyToast, {
+    x: 'right', // default
+    y: 'top', // default
+    color: 'info', // default
+    icon: 'info',
+    iconColor: '', // default
+    classes: [
+        'body-2'
+    ],
+    timeout: 2000, // default
+    dismissable: true, // default
+    multiLine: false, // default
+    vertical: false, // default
+    queueable: true, // default
+    showClose: true, // default
+    closeText: '', // default
+    closeIcon: 'close', // default
+    closeColor: '', // default
+    slot: [], //default
+    shorts: {
+        custom: {
+            color: 'purple'
+        }
+    },
+    property: '$toast' // default
+})
 
 export default new Vuetify({
     icons: {
-        iconfont: 'mdi',
+        iconfont: "mdi"
     },
     lang: {
         locales: {zhHans, en},
-        current: 'zhHans',
+        current: "zhHans"
     },
     theme: {
         light: true,
         themes: {
             light: {
-                primary: '#1976D2',
-                accent: '#e91e63',
-                secondary: '#30b1dc',
-                success: '#4CAF50',
-                info: '#2196F3',
-                warning: '#FB8C00',
-                error: '#FF5252'
+                primary: "#1976D2",
+                accent: "#e91e63",
+                secondary: "#30b1dc",
+                success: "#4CAF50",
+                info: "#2196F3",
+                warning: "#FB8C00",
+                error: "#FF5252"
             },
             dark: {
                 primary: colors.blue.darken2,

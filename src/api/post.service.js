@@ -1,10 +1,6 @@
 import request from './http.client';
 
-export class PostService {
-  constructor() {
-    this.loading = request().loading;
-    this.error = request().error;
-  }
+class PostService {
 
   list(query = null) {
     return request.instance().get('/posts');
@@ -26,3 +22,5 @@ export class PostService {
     return request.instance().get(`/posts/{id}`);
   }
 }
+
+export default new PostService();

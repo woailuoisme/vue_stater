@@ -57,12 +57,6 @@ export default {
         return state.loadedMeetups.find((meetup) => meetup.id === meetupId);
       };
     },
-    loading(state) {
-      return state.loading;
-    },
-    error(state) {
-      return state.error;
-    },
   },
   actions: {
     loadMeetups({ commit }) {

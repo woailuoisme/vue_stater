@@ -1,60 +1,59 @@
 import axios from 'axios';
+import store from '../stores/index';
 class HttpClient {
-  baseURL = 'http://localhost:3000/api';
-  loading = fasle;
-  error = null;
+    baseURL = 'http://localhost:8000/api/v1';
   headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
-  currentUserString = window.localStorage.currentUser;
-  currentUser = currentUserString ? JSON.parse(currentUserString) : '';
+    token = window.localStorage.getItem('access_token');
   headersWithAuth = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: currentUser && currentUser.token,
+      Authorization: `Bearer ${this.token}`
   };
 
   instance(auth = false) {
-    // 创建axios实例
     const service = axios.create({
-      // baseURL: process.env.BASE_API, // api的base_url
       baseURL: this.baseURL,
-      withCredentials: false,
+        crossDomain: true,//设置cross跨域
+        withCredentials: false,//设置cross跨域 并设置访问权限 允许跨域携带cookie信息
       headers: auth ? this.headersWithAuth : this.headers,
-      timeout: 20000, // 请求超时时间
+        timeout: 20000,
     });
 
-    // request拦截器
+      // request 拦截器
     service.interceptors.request.use(
       (config) => {
         //此处进行token等数据处理
-        this.loading = true;
+          store.commit('setLoading', true);
         return config;
       },
       (error) => {
-        // Do something with request error
-        this.error = error;
-        this.loading = false;
+          store.commit('setLoading', false);
+          store.commit('setError', error);
         Promise.reject(error);
       }
     );
 
-    // respone拦截器
+      // respone 拦截器
     service.interceptors.response.use(
       (response) => {
         const res = response.data;
-        // if (res.code !== 200) {
-        //   //此处进行异常处理
-        //   return Promise.reject(res);
-        // }
-        this.loading = false;
+          if (res.code === 401) {
+              if (localStorage.getItem('access_token')) {
+                  localStorage.removeItem('access_token')
+              }
+              store.dispatch('logout').then();
+              // return Promise.reject(res);
+          }
+          store.commit('setLoading', false);
         return response;
       },
       (error) => {
-        //此处进行异常处理
-        this.error = error;
-        this.loading = false;
+          console.log(error.response.data)
+          store.commit('N', false);
+          store.commit('setError', error);
         return Promise.reject(error);
       }
     );
