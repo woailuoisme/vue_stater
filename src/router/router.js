@@ -1,17 +1,17 @@
 import Vue from "vue";
 import Router from "vue-router";
 import AuthGuard from "./auth.guard";
-import User from "@/views/user/User.vue";
-import UserProfile from "@/views/user/Profile";
-import UserCart from "@/views/user/Cart";
-import UserOrder from "@/views/user/Order";
-import UserAddress from "@/views/user/Address";
-import Meetups from "@/views/meetup/Meetups";
-import Meetup from "@/views/meetup/Meetup";
-import MeetupCreate from "@/views/meetup/CreateMeetup";
-import Signin from "@/views/auth/Signin";
-import Signup from "@/views/auth/Signup";
-import About from "@/views/About";
+import User from "../views/user/User.vue";
+import UserProfile from "../views/user/Profile";
+import UserCart from "../views/user/Cart";
+import UserOrder from "../views/user/Order";
+import UserAddress from "../views/user/Address";
+import Meetups from "../views/meetup/Meetups";
+import Meetup from "../views/meetup/Meetup";
+import MeetupCreate from "../views/meetup/CreateMeetup";
+import Signin from "../views/auth/Signin";
+import Signup from "../views/auth/Signup";
+import About from "../views/About";
 import Admin from "../views/Admin/Admin";
 import AdminProduct from "../views/Admin/AdminProduct";
 import AdminDashBoard from "../views/Admin/AdminDashBoard";
@@ -22,7 +22,10 @@ import AdminProductNew from "../views/Admin/AdminProductNew";
 import Home from "../views/Home";
 import ProductList2 from "../views/product/ProductList2";
 import ProductDetail from "../views/product/ProductDetail";
-import Test from "../views/Test"
+import ProductNew from "../views/product/ProductNew";
+import Test from "../views/Test";
+import DashBoard from "../views/DashBoard";
+import NotFound from "../views/NotFound";
 
 Vue.use(Router);
 
@@ -35,6 +38,18 @@ export default new Router({
             name: "home",
             component: Home
         },
+
+        {
+            path: "/dashboard",
+            name: "dashboard",
+            component: DashBoard
+        },
+
+        {
+            path: "*",
+            name: "NotFound",
+            component: NotFound
+        },
         {
             path: "/test",
             name: "Test",
@@ -44,6 +59,11 @@ export default new Router({
             path: "/product",
             name: "product",
             component: ProductList2
+        },
+        {
+            path: '/product_new',
+            name: 'product_new',
+            component: ProductNew
         },
         {
             path: "/product_detail",

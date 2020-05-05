@@ -32,7 +32,10 @@
                             <v-spacer></v-spacer>
                             <v-dialog max-width="500px" v-model="dialog">
                                 <template v-slot:activator="{ on }">
-                                    <v-btn class="mb-2" color="primary" dark v-on="on">New Proudct</v-btn>
+                                    <v-btn class="mb-2" color="primary" dark v-on="on"
+                                    >New Proudct
+                                    </v-btn
+                                    >
                                 </template>
                                 <v-card>
                                     <v-card-title>
@@ -78,13 +81,14 @@
 
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn @click="close" color="blue darken-1" text
+                                        <v-btn @click="close" color="blue darken-1"
                                         >Cancel
                                         </v-btn>
-                                        <v-btn @click="save" color="blue darken-1" text>Save</v-btn>
+                                        <v-btn @click="save" color="blue darken-1">Save</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
+
                         </v-toolbar>
                     </template>
                     <template v-slot:item.actions="{ item }">

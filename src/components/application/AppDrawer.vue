@@ -1,39 +1,45 @@
 <template>
-  <v-navigation-drawer temporary v-model="sideNav">
-    <v-list>
-      <v-list-tile v-for="item in menuItems" :key="item.title" :to="item.link">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>{{ item.title }}</v-list-tile-content>
-      </v-list-tile>
-      <v-list-tile v-if="userIsAuthenticated" @click="onLogout">
-        <v-list-tile-action>
-          <v-icon>exit_to_app</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>Logout</v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+  <v-navigation-drawer temporary v-model="draw">
+      <v-list>
+          <v-list-item :key="item.title" :to="item.link" v-for="item in menuItems">
+              <v-list-item-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>{{ item.title }}</v-list-item-content>
+          </v-list-item>
+          <v-list-item @click="onLogout" v-if="userIsAuthenticated">
+              <v-list-item-action>
+                  <v-icon>exit_to_app</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>Logout</v-list-item-content>
+          </v-list-item>
+      </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      sideNav: false
-    };
-  },
-  computed: {
-    menuItems() {
-      let menuItems = [
-        { icon: "face", title: "Sign up", link: "/signup" },
-        { icon: "lock_open", title: "Sign in", link: "/signin" }
-      ];
-      if (this.userIsAuthenticated) {
-        menuItems = [
-          {
-            icon: "supervisor_account",
+    props: {
+        draw: {
+            type: Boolean,
+            default: false
+        }
+    },
+    // data() {
+    //   return {
+    //     sideNav: false
+    //   };
+    // },
+    computed: {
+        menuItems() {
+            let menuItems = [
+                {icon: "face", title: "Sign up", link: "/signup"},
+                {icon: "lock_open", title: "Sign in", link: "/signin"}
+            ];
+            if (this.userIsAuthenticated) {
+                menuItems = [
+                    {
+                        icon: "supervisor_account",
             title: "View Meetups",
             link: "/meetups"
           },

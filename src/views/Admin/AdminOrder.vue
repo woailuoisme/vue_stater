@@ -56,7 +56,7 @@
                         this.totalDesserts = data.total;
                     });
                 },
-                deep: true,
+                deep: true
                 // itemsPerPage:5
             }
         },

@@ -8,8 +8,8 @@
                         :to="{ path: item.url }"
                         v-for="(item, i) in items"
                 >
-                    <v-list-item-icon>
-                        <v-icon v-text="item.icon"></v-icon>
+                    <v-list-item-icon class="mr-4">
+                        <v-icon small v-text="item.icon"></v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title v-text="item.text"></v-list-item-title>
@@ -26,11 +26,11 @@
             return {
                 item: 1,
                 items: [
-                    {text: "Dashboard", icon: "mdi-clock", url: "/admin/dashboard"},
-                    {text: "Category", icon: "mdi-clock", url: "/admin/category"},
-                    {text: "Product", icon: "mdi-account", url: "/admin/product"},
-                    {text: "Product_Sku", icon: "mdi-flag", url: "/admin/product_sku"},
-                    {text: "Order", icon: "mdi-flag", url: "/admin/order"}
+                    {text: "仪表盘", icon: "mdi-clock", url: "/admin/dashboard"},
+                    {text: "类别", icon: "mdi-clock", url: "/admin/category"},
+                    {text: "产品", icon: "mdi-account", url: "/admin/product"},
+                    {text: "产品SKU", icon: "mdi-flag", url: "/admin/product_sku"},
+                    {text: "订单", icon: "mdi-flag", url: "/admin/order"}
                 ]
             };
         },

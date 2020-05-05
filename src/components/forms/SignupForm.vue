@@ -31,7 +31,6 @@
                       id="password"
                       v-model="password"
                       type="password"
-                      required
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -48,8 +47,8 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12">
-                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                  <v-col cols="4" offset-md="4">
+                    <v-btn :disabled="loading" :loading="loading" block type="submit">
                       Sign up
                       <span slot="loader" class="custom-loader">
                         <v-icon light>cached</v-icon>

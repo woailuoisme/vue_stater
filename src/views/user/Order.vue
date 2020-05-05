@@ -5,16 +5,16 @@
         </v-card>
         <v-card>
             <v-card-title>
-                订单
+                <v-row align="center" justify="space-between">
+                    <v-col md="2">
+                        <div class="">订单列表</div>
+                    </v-col>
+                    <v-col md="2">
+                        <v-select :items="orderStatus" label="订单状态"></v-select>
+                    </v-col>
+                </v-row>
             </v-card-title>
             <v-card-text>
-                <div class="headline">
-                    订单编号 <span>{{ order.order_no }}</span>
-                </div>
-                <v-divider></v-divider>
-                <div class="title">
-                    产品列表
-                </div>
                 <v-divider></v-divider>
                 <v-simple-table>
                     <template v-slot:default>
@@ -23,72 +23,47 @@
                             <th>
                                 <v-checkbox></v-checkbox>
                             </th>
-                            <th class="text-center">商品</th>
-                            <th class="text-center">缩略图</th>
-                            <th class="text-center">数量</th>
+                            <th class="text-center">订单编号</th>
+                            <th class="text-center">价格</th>
+                            <th class="text-center">状态</th>
                             <th class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr :key="item.id" v-for="item in order.products">
-                            <td>
+                        <tr :key="item.order_no + index" v-for="(item, index) in orders">
+                            <td class="text-center">
                                 <v-checkbox></v-checkbox>
                             </td>
-                            <td>{{ item.name }}</td>
-                            <td>
-                                <v-img
-                                        :aspect-ratio="1"
-                                        :max-height="40"
-                                        :max-width="40"
-                                        :src="item.imageUrl"
-                                ></v-img>
+                            <td class="text-center">{{ item.order_no }}</td>
+                            <td class="text-center">{{ item.price }}</td>
+                            <td class="text-center">
+                                <v-row justify="center">
+                                    <v-chip :color="colorClass(item.order_status)">
+                                        {{ colorString(item.order_status) }}
+                                    </v-chip>
+                                </v-row>
                             </td>
-                            <td>{{ item.quantity }}</td>
-                            <td>
-                                <v-icon @click="remove(item.id)" color="error" small
+                            <td class="text-center">
+                                <v-icon @click.stop="remove(item)" color="error"
+                                >mdi-eye
+                                </v-icon>
+                                <v-icon @click.stop="update(item)" color="error"
                                 >mdi-delete
-                                </v-icon
-                                >
+                                </v-icon>
                             </td>
                         </tr>
                         </tbody>
                     </template>
                 </v-simple-table>
-
                 <v-divider></v-divider>
-                <v-row align="center" justify="end">
-                    <div class="display-1 mr-4">Total</div>
-                    <div class="headline mr-4">RMB 4366.00</div>
-                </v-row>
-                <v-divider></v-divider>
-                <div class="title">
-                    邮寄地址：
+                <div class="text-center my-4">
+                    <v-pagination
+                            :length="15"
+                            :total-visible="7"
+                            v-model="page"
+                    ></v-pagination>
                 </div>
-                <v-form>
-                    <v-row>
-                        <v-col cols="12" md="4">
-                            <v-text-field label="省"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-text-field label="市"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-text-field label="县/镇"></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12" md="12">
-                            <v-text-field label="详细地址"></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-form>
             </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-select :items="payItems" class="mr-3" label="支付方式"></v-select>
-                <v-btn color="primary" large rounded>确认支付</v-btn>
-            </v-card-actions>
         </v-card>
     </v-container>
 </template>
@@ -103,35 +78,52 @@
         name: "Order",
         data() {
             return {
-                order: {
-                    id: 2,
-                    order_no: "#03840380808",
-                    products: [
-                        {
-                            id: 3,
-                            name: "Frozen Yogurt",
-                            imageUrl:
-                                "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1567022175704",
-                            quantity: 3
-                        },
-                        {
-                            id: 5,
-                            name: "Frozen Yogurt",
-                            imageUrl:
-                                "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1567022175704",
-                            quantity: 3
-                        },
-                        {
-                            id: 4,
-                            name: "Frozen Yogurt",
-                            imageUrl:
-                                "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1567022175704",
-                            quantity: 3
-                        }
-                    ]
-                },
-                payItems: ["支付宝1", "支付宝2", "微信"]
+                page: 0,
+                orderStatus: ["已支付", "未支付", "已完成"],
+                orders: [
+                    {
+                        id: 3,
+                        order_no: "#03840380808",
+                        price: 2993,
+                        order_status: "un-pay"
+                    },
+                    {
+                        id: 4,
+                        order_no: "#03840380806",
+                        price: 2993,
+                        order_status: "paid"
+                    },
+                    {
+                        id: 4,
+                        order_no: "#03840380803",
+                        price: 2993,
+                        order_status: "completed"
+                    }
+                ]
             };
+        },
+        methods: {
+            colorClass(status) {
+                if (status === "un-pay") {
+                    return "error";
+                } else if (status === "paid") {
+                    return "success";
+                } else if (status === "completed") {
+                    return "indigo";
+                }
+            },
+            colorString(status) {
+                if (status === "un-pay") {
+                    return "未支付";
+                } else if (status === "paid") {
+                    return "已支付";
+                } else if (status === "completed") {
+                    return "关闭";
+                }
+            },
+            remove(item) {
+                const index = this.products;
+            }
         }
     };
 </script>

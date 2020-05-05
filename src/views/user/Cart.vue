@@ -36,12 +36,22 @@
                                         :src="item.imageUrl"
                                 ></v-img>
                             </td>
-                            <td class="text-start">{{ item.quantity }}</td>
+                            <!--                            <td class="text-start">{{ item.quantity }}</td>-->
+                            <td class="text-start">
+                                <v-text-field
+                                        @click:append="appendIconCallback"
+                                        @click:prepend="prependIconCallback"
+                                        append-icon="mdi-plus"
+                                        prepend-icon="mdi-minus"
+                                        style="width: 30px"
+                                        v-model="item.quantity"
+                                >
+                                </v-text-field>
+                            </td>
                             <td class="text-start">
                                 <v-icon @click="remove(item.id)" color="error" small
                                 >mdi-delete
-                                </v-icon
-                                >
+                                </v-icon>
                             </td>
                         </tr>
                         </tbody>
@@ -67,6 +77,14 @@
     export default {
         components: {
             CartBreadcrumbs
+        },
+        methods: {
+            appendIconCallback() {
+
+            },
+            prependIconCallback() {
+
+            }
         },
         data() {
             return {
