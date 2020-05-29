@@ -25,6 +25,7 @@
                                         v-model="commentInfo.rating"
                                 ></v-rating>
                                 <span class="title">{{ commentInfo.rating }}</span>
+                                <span class="title">{{ commentInfo.ratingTag }}</span>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary"> 提交评论</v-btn>
                             </v-row>
@@ -63,7 +64,7 @@
                                         <v-icon color="error">mdi-thumb-down</v-icon>
                                         <div>&nbsp;&nbsp;3</div>
                                         <v-spacer></v-spacer>
-                                        <div class="subtitle-1 mr-10">{{comment.created_at}}</div>
+                                        <div class="subtitle-1 mr-10">{{ comment.created_at }}</div>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -78,11 +79,27 @@
 <script>
     export default {
         name: "ProductReview",
+        watch: {
+            "commentInfo.rating": function (newVal, oldVal) {
+                if (newVal > 0 && newVal <= 1) {
+                    this.commentInfo.ratingTag = '极差'
+                } else if (newVal > 1 && newVal <= 2) {
+                    this.commentInfo.ratingTag = '很差'
+                } else if (newVal > 2 && newVal <= 3) {
+                    this.commentInfo.ratingTag = '一般'
+                } else if (newVal > 3 && newVal <= 4) {
+                    this.commentInfo.ratingTag = '好'
+                } else if (newVal > 4 && newVal <= 5) {
+                    this.commentInfo.ratingTag = '极好'
+                }
+            }
+        },
         data() {
             return {
                 commentInfo: {
                     content: null,
-                    rating: 5
+                    rating: 5,
+                    ratingTag: "一般"
                 },
                 comments: [
                     {

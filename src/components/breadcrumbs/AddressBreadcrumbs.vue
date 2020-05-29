@@ -1,33 +1,21 @@
 <template>
-  <v-breadcrumbs :items="items">
-    <template v-slot:divider>
-      <v-icon>mdi-chevron-right</v-icon>
-    </template>
-  </v-breadcrumbs>
+  <Breadcrumb :items="items"></Breadcrumb>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    items: [
-      {
-        text: "Home",
-        disabled: false,
-        href: "/home"
-      },
-      {
-        text: "User",
-        disabled: false,
-        href: "/user"
-      },
-      {
-        text: "Address",
-        disabled: true,
-        href: "/user/address"
-      }
-    ]
-  })
-};
+  import Breadcrumb from "../shared/Breadcrumb";
+  import {mapGetters} from 'vuex'
+
+  export default {
+    components: {
+      Breadcrumb
+    },
+    computed: {
+      ...mapGetters({
+        items: 'breadcrumb/address'
+      })
+    },
+  };
 </script>
 
 <style scoped></style>

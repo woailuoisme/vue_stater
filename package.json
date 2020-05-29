@@ -4,20 +4,26 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "prod": "vue-cli-service build --mode prod"
   },
   "dependencies": {
     "@mdi/font": "^4.5.95",
+    "@tinymce/tinymce-vue": "^3.2.1",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "izitoast": "^1.4.0",
     "lodash": "^4.17.15",
+    "swiper": "^5.4.1",
+    "tinymce": "^5.2.2",
     "vue": "^2.6.10",
-    "vue-quill-editor": "^3.0.6",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-izitoast": "^1.2.1",
     "vue-router": "^3.0.3",
+    "vue-spinner": "^1.0.3",
     "vue-video-player": "^5.0.2",
-    "vuetify": "^2.2.23",
+    "vuetify": "^2.2.27",
     "vuetify-confirm": "^2.0.2",
-    "vuetify-toast-snackbar": "^0.6.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

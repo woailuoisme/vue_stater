@@ -4,14 +4,20 @@ import auth from './auth'
 import meetup from "./meetup";
 import share from "./share";
 import category from "./category";
+import cart from './cart'
+import breadcrumb from "./breadcrumb";
+import product from "./product";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    modules:{
+    modules: {
         auth,
         meetup,
         share,
-        category
+        category,
+        cart,
+        breadcrumb,
+        product
     }
 })

@@ -1,18 +1,24 @@
-import request from './http.client';
+import client from './http.client';
 
 class AuthService {
-    signup(data) {
-        return request.instance().post('/auth/signup', data);
+    static login(data = {}) {
+        return client.instance().post('/auth/login', {
+            email: data.email,
+            password: data.password
+        });
     }
 
-    signin(data) {
-        console.log(data);
-        return request.instance().post('/auth/login', data);
+    static register(data = {}) {
+        return client.instance().post('/auth/register', {
+            email: data.email,
+            password: data.password,
+            confirmPassword: data.confirmPassword
+        });
     }
 
-    me() {
-        return request.instance(true).get('/auth/me');
+    static me() {
+        return client.instance(true).get('/auth/me');
     }
 }
 
-export default new AuthService();
+export default AuthService;

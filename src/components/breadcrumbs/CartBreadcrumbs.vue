@@ -11,20 +11,20 @@ export default {
   data: () => ({
     items: [
       {
-        text: "Home",
-        disabled: false,
-        href: "/home"
+          text: "主页",
+          disabled: false,
+          href: "/home"
       },
-      {
-        text: "user",
-        disabled: false,
-        href: "/user"
-      },
-      {
-        text: "cart",
-        disabled: true,
-        href: "/user/cart"
-      }
+        {
+            text: "用户中心",
+            disabled: false,
+            href: "/user"
+        },
+        {
+            text: "购物车",
+            disabled: true,
+            href: "/user/cart"
+        }
     ]
   })
 };

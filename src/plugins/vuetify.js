@@ -1,6 +1,6 @@
 // import '@mdi/font/css/materialdesignicons.css'
 import Vue from "vue";
-import Vuetify, {VSnackbar, VBtn, VIcon} from "vuetify/lib";
+import Vuetify, {VBtn, VIcon, VSnackbar} from "vuetify/lib";
 import "vuetify/dist/vuetify.min.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "@mdi/font/css/materialdesignicons.min.css";
@@ -8,7 +8,6 @@ import colors from "vuetify/lib/util/colors";
 
 import zhHans from "vuetify/lib/locale/zh-Hans";
 import en from "vuetify/lib/locale/en";
-import VuetifyToast from 'vuetify-toast-snackbar'
 
 Vue.use(Vuetify, {
     components: {
@@ -17,32 +16,6 @@ Vue.use(Vuetify, {
         VIcon
     }
 });
-Vue.use(VuetifyToast, {
-    x: 'right', // default
-    y: 'top', // default
-    color: 'info', // default
-    icon: 'info',
-    iconColor: '', // default
-    classes: [
-        'body-2'
-    ],
-    timeout: 2000, // default
-    dismissable: true, // default
-    multiLine: false, // default
-    vertical: false, // default
-    queueable: true, // default
-    showClose: true, // default
-    closeText: '', // default
-    closeIcon: 'close', // default
-    closeColor: '', // default
-    slot: [], //default
-    shorts: {
-        custom: {
-            color: 'purple'
-        }
-    },
-    property: '$toast' // default
-})
 
 export default new Vuetify({
     icons: {

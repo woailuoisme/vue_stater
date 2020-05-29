@@ -6,7 +6,9 @@
             </v-col>
             <v-col cols="10">
                 <v-card>
-                    <router-view></router-view>
+                    <v-fade-transition>
+                        <router-view></router-view>
+                    </v-fade-transition>
                 </v-card>
             </v-col>
         </v-row>

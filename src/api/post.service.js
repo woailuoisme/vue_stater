@@ -6,11 +6,11 @@ class PostService {
     return request.instance().get('/posts');
   }
 
-  create(data) {
+  create(data = {}) {
     return request.instance().post('/posts', data);
   }
 
-  update(id, data) {
+  update(id, data = {}) {
     return request.instance().put(`/posts/${id}`, data);
   }
 
@@ -18,7 +18,7 @@ class PostService {
     return request.instance().delete(`/posts/${id}`);
   }
 
-  view(id) {
+  show(id) {
     return request.instance().get(`/posts/{id}`);
   }
 }

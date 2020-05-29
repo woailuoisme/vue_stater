@@ -29,6 +29,7 @@
                     {text: "仪表盘", icon: "mdi-clock", url: "/admin/dashboard"},
                     {text: "类别", icon: "mdi-clock", url: "/admin/category"},
                     {text: "产品", icon: "mdi-account", url: "/admin/product"},
+                    {text: "产品新建", icon: "mdi-account", url: "/admin/product_new"},
                     {text: "产品SKU", icon: "mdi-flag", url: "/admin/product_sku"},
                     {text: "订单", icon: "mdi-flag", url: "/admin/order"}
                 ]

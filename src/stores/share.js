@@ -1,13 +1,14 @@
 export default {
+    namespaced: true,
     state: {
         loading: false,
         error: null
     },
     mutations: {
-        setLoading(state, payload) {
+        SET_LOADING(state, payload) {
             state.loading = payload;
         },
-        setError(state, payload) {
+        SET_ERROR(state, payload) {
             state.error = payload;
         }
     },

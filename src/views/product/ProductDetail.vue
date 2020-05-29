@@ -107,6 +107,12 @@
   import ProductSku from "./ProductSku";
 
   export default {
+    props: {
+      id: {
+        type: Number,
+        required: true
+      }
+    },
     components: {
       VideoPlayer,
       ProductReview,
@@ -114,7 +120,6 @@
     },
     data() {
       return {
-        // modelKeys:this.sku_attribute_obj(),
         sizeSelect: 1,
         colorSelect: 1,
         colors: [
