@@ -27,6 +27,7 @@ import Wishlist from "../views/user/Wishlist";
 import Search from "../views/Search";
 import Order from "../views/order/Order";
 import Trade from "../views/trade/Trade"
+import BarChartExample from "../components/shared/chart/BarChartExample";
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ const router = new Router({
   mode: "history",
   // base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/chart",
+      name: "chart",
+      component: BarChartExample
+    },
     {
       path: "/login",
       name: "login",

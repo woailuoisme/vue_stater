@@ -8,13 +8,12 @@
       <v-spacer></v-spacer>
       <div>
         <v-btn
-                :key="index"
-                :to="{ path: menu.path }"
-                text
-                v-for="(menu, index) in headerMenu"
-        >{{ menu.name }}
-        </v-btn
-        >
+          :key="index"
+          :to="{ path: menu.path }"
+          text
+          v-for="(menu, index) in headerMenu"
+          >{{ menu.name }}
+        </v-btn>
 
         <v-menu bottom offset-y open-on-hover>
           <template v-slot:activator="{ on }">
@@ -27,19 +26,18 @@
             <v-list two-line>
               <v-list-item-group>
                 <v-list-item
-                        :key="index"
-                        :link="false"
-                        @click=""
-                        v-for="(item, index) in cartItems"
+                  :key="index"
+                  :link="false"
+                  @click=""
+                  v-for="(item, index) in cartItems"
                 >
                   <v-list-item-avatar>
                     <v-icon>mdi-clock</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    <v-list-item-subtitle>{{
-                      item.title
-                      }}
+                    <v-list-item-subtitle
+                      >{{ item.title }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
@@ -62,13 +60,23 @@
         <v-btn text to="/login">登录</v-btn>
         <v-btn text to="/register">注册</v-btn>
       </span>
-      <span v-if="userIsAuthenticated">
-        <v-avatar>
-          <img alt="John" src="user.image"/>
-        </v-avatar>
-        <span>{{ user.name }}</span>
-        <v-btn text>logout</v-btn>
-      </span>
+
+      <v-menu open-on-hover bottom offset-y>
+        <template v-slot:activator="{ on }">
+          <div v-if="userIsAuthenticated" class="d-flex align-center" v-on="on">
+            <v-avatar size="40">
+              <img
+                alt="John"
+                src="https://jetsport.com.au/assets/backend/images/default-avatar.png"
+              />
+            </v-avatar>
+            <span class="title ml-3">Seaside</span>
+          </div>
+        </template>
+        <v-list>
+          <v-btn text class="red--text darken-3">logout</v-btn>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-navigation-drawer app clipped v-model="drawer">
       <v-list shaped>
@@ -107,58 +115,58 @@
 </template>
 
 <script>
-  import LoginDialog from "../dialogs/LoginDialog";
-  import {mapGetters} from "vuex";
+    import LoginDialog from "../dialogs/LoginDialog";
+    import {mapGetters} from "vuex";
 
-  export default {
-    components: {
-      LoginDialog
-    },
-    data() {
-      return {
-        drawer: false,
-        dialog: false,
-        headerMenu: [
-          {path: "/home", name: "主页"},
-          {path: "/user", name: "个人中心"},
-          {path: "/category", name: "产品分类"},
-          {path: "/products", name: "产品中心"},
-          {path: "/admin", name: "后台"},
-          {path: "/about", name: "关于"}
-        ],
-        menuItem: 0,
-        menuItems: [
-          {text: "My Files", icon: "mdi-folder"},
-          {text: "Shared with me", icon: "mdi-account-multiple"},
-          {text: "Starred", icon: "mdi-star"},
-          {text: "Recent", icon: "mdi-history"},
-          {text: "Offline", icon: "mdi-check-circle"},
-          {text: "Uploads", icon: "mdi-upload"},
-          {text: "Backups", icon: "mdi-cloud-upload"}
-        ],
-        cartItems: [
-          {title: "Click Me"},
-          {title: "Click Me"},
-          {title: "Click Me"},
-          {title: "Click Me 2"}
-        ]
-      };
-    },
-    methods: {},
-    mounted() {
-      // this.$store.dispatch("me");
-    },
-    computed: {
-      ...mapGetters({
-        userIsAuthenticated: "auth/userIsAuthenticated",
-        user: "auth/user"
-      })
-    }
-  };
+    export default {
+  components: {
+    LoginDialog
+  },
+  data() {
+    return {
+      drawer: false,
+      dialog: false,
+      headerMenu: [
+        { path: "/home", name: "主页" },
+        { path: "/user", name: "个人中心" },
+        { path: "/category", name: "产品分类" },
+        { path: "/products", name: "产品中心" },
+        { path: "/admin", name: "后台" },
+        { path: "/about", name: "关于" }
+      ],
+      menuItem: 0,
+      menuItems: [
+        { text: "My Files", icon: "mdi-folder" },
+        { text: "Shared with me", icon: "mdi-account-multiple" },
+        { text: "Starred", icon: "mdi-star" },
+        { text: "Recent", icon: "mdi-history" },
+        { text: "Offline", icon: "mdi-check-circle" },
+        { text: "Uploads", icon: "mdi-upload" },
+        { text: "Backups", icon: "mdi-cloud-upload" }
+      ],
+      cartItems: [
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
+      ]
+    };
+  },
+  methods: {},
+  mounted() {
+    // this.$store.dispatch("me");
+  },
+  computed: {
+    ...mapGetters({
+      userIsAuthenticated: "auth/userIsAuthenticated",
+      user: "auth/user"
+    })
+  }
+};
 </script>
 
 <style scoped>
-  .scroll {
-    overflow-y: auto;
-  }
+.scroll {
+  overflow-y: auto;
+}
 </style>

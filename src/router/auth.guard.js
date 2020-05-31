@@ -1,9 +1,25 @@
-import store from "../stores/index";
+import vue from "../main";
 
-export default (to, from, next) => {
-  if (store.getters.user) {
+const authAdmin = (to, from, next) => {
+  if (
+    vue.$store.auth.getters.userIsAuthenticated &&
+    ["admin", "content", "super"].includes(vue.$store.auth.getters.role)
+  ) {
     next();
   } else {
-    next("/signin");
+    next({ path: "/login" });
   }
+};
+
+const auth = (to, from, next) => {
+  if (vue.$store.auth.getters.userIsAuthenticated) {
+    next();
+  } else {
+    next({ path: "/login" });
+  }
+};
+
+export default {
+  auth,
+  authAdmin
 };

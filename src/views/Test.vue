@@ -74,11 +74,9 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-row>
-        <Spinner color="red" name="circle"/>
-        <Spinner color="#2fc6bc" name="ball-clip-rotate-multiple"/>
-        <Spinner color="#2fc6bc" name="ball-clip-rotate-multiple"/>
-      </v-row>
+      <DatePiker v-model="date"></DatePiker>
+      <TimePicker v-model="time"></TimePicker>
+      {{ date}} {{time}}
       <v-row>
         <EditorTinymce></EditorTinymce>
       </v-row>
@@ -95,19 +93,25 @@
   import ProductQuantity from "../components/shared/ProductQuantity";
   import FileProgress from "../components/shared/FileProgress";
   import EditorTinymce from "../components/shared/EditorTinyMCE";
+  import DatePiker from "../components/shared/DatePiker";
+  import TimePicker from "../components/shared/TimePicker";
   import Toast from "../utils/toast";
 
   export default {
     components: {
       ProductQuantity,
       FileProgress,
-      EditorTinymce
+      EditorTinymce,
+      DatePiker,
+      TimePicker
     },
     updated() {
       console.log(this.groupJson);
     },
     data() {
       return {
+        date: new Date().toISOString().substr(0,10),
+        time:null,
         quantity: 1,
         dialog: false,
         valid: false,

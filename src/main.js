@@ -5,7 +5,6 @@ import store from "./stores/index";
 import vuetify from "./plugins/vuetify";
 import DateFilter from "./filters/date";
 
-
 import VuetifyConfirm from "vuetify-confirm";
 import Editor from '@tinymce/tinymce-vue'
 import VueIziToast from 'vue-izitoast';
@@ -23,14 +22,10 @@ Vue.use(VuetifyConfirm, {
 });
 
 Vue.use(Editor)
-
-
 Vue.use(VueIziToast);
-
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
-// Vue.component('app-alert', AlertCmp);
 
 export default new Vue({
     router,

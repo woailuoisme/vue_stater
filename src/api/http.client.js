@@ -2,13 +2,15 @@ import axios from 'axios';
 import Toast from "../utils/toast";
 import vue from "../main"
 
+let currentUserString = window.localStorage.currentUser;
+let currentUser = currentUserString ? JSON.parse(currentUserString) : '';
 class HttpClient {
     baseURL = 'http://localhost:8000/api/v1';
     headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
     };
-    token = window.localStorage.getItem('access_token');
+    token = currentUser && currentUser.token
     headersWithAuth = {
         Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -27,9 +29,7 @@ class HttpClient {
       // request 拦截器
       client.interceptors.request.use(
           (config) => {
-              //此处进行token等数据处理
-              //   store.commit('setLoading', true);
-              vue.$store.commit('share/SET_LOADING', true, {root: true})
+              // vue.$store.commit('share/SET_LOADING', true, {root: true})
               return config;
           },
           (error) => {
@@ -43,23 +43,16 @@ class HttpClient {
       client.interceptors.response.use(
           (response) => {
               const res = response.data;
-              if (res.code === 401) {
-                  if (localStorage.getItem('access_token')) {
-                      localStorage.removeItem('access_token')
-                  }
-                  // store.dispatch('logout').then();
-                  // return Promise.reject(res);
-              }
               vue.$store.commit('share/SET_LOADING', false, {root: true})
         return response;
       },
       (error) => {
           // // Do something with response error
-          // if (error.response.status === 401) {
-          //     console.log('unauthorized, logging out ...');
-          //     auth.logout();
-          //     router.replace('/auth/login');
-          // }
+          if (error.response.status === 401) {
+              Toast.error(error.response.status)
+              vue.$store.commit('auth/RESET_USER', false, {root: true})
+              vue.$router.replace('/login')
+          }
           vue.$store.commit('share/SET_LOADING', false, {root: true})
           Toast.error(error.message)
           return Promise.reject(error);

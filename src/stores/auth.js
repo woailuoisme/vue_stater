@@ -1,63 +1,70 @@
-// import auth from "../api/auth.service";
-import authService from "../api/auth.service";
-import router from "../router/router";
-import api from '../api/api'
+import AuthService from "../api/auth.service";
+import toast from '../utils/toast'
+
 export default {
-    namespaced: true,
-    state: {
-        user: null,
-        token: ''
+  namespaced: true,
+  state: {
+    user: window.localStorage.user || {}
+  },
+  mutations: {
+    RESET_USER(state) {
+      state.user = {};
+      state.token = "";
+      window.localStorage.user = JSON.stringify({});
     },
-    mutations: {
-        LOGOUT_USER(state) {
-            state.user = {};
-            state.token = '';
-            window.localStorage.user = JSON.stringify({});
-        },
-        SET_CURRENT_USER(state, user) {
-            state.user = user;
-            window.localStorage.user = JSON.stringify(user);
-        }
-    },
-    actions: {
-        async login({commit, dispatch}, loginInfo) {
-            try {
-                let response = await api().post("/auth/login", loginInfo);
-                let user = response.data.data;
-                commit("SET_CURRENT_USER", user);
-                return user;
-            } catch {
-                return {
-                    error: "Email/password combination was incorrect.  Please try again."
-                };
-            }
-        },
-        async register({commit, dispatch}, registerInfo) {
-            try {
-                let response = await api().post("/auth/signup", registerInfo);
-                let user = response.data.data;
-                commit("SET_CURRENT_USER", user);
-                return user;
-            } catch {
-                return {error: "There was an error.  Please try again."};
-            }
-        },
-        async logout({commit}) {
-            try {
-                let response = await api(true).post("/auth/logout");
-                commit("LOGOUT_USER");
-                return {message: "user logout successfully"};
-            } catch {
-                return {error: "There was an error.  Please try again."};
-            }
-        }
-    },
-    getters: {
-        user(state) {
-            return state.user;
-        },
-        userIsAuthenticated(state) {
-            return state.user !== null && state.user !== undefined;
-        }
+    SET_USER(state, user) {
+      state.user = user;
+      window.localStorage.user = JSON.stringify(user);
     }
+  },
+  actions: {
+    async login({ commit }, loginInfo) {
+      try {
+        let response = await AuthService.login(loginInfo);
+        let user = response.data.data;
+        commit("SET_USER", user);
+        toast.success('用户登录成功')
+        return user;
+      } catch {
+          toast.success('Email/password combination was incorrect.  Please try again.')
+        return {
+          error: "Email/password combination was incorrect.  Please try again."
+        };
+      }
+    },
+    async register({ commit }, registerInfo) {
+      try {
+        let response = await AuthService.register(registerInfo);
+        let user = response.data.data;
+        commit("SET_USER", user);
+        return user;
+      } catch {
+        return { error: "There was an error.  Please try again." };
+      }
+    },
+    async logout({ commit }) {
+      try {
+        let response = await AuthService.logout();
+        commit("RESET_USER");
+        return { message: "user logout successfully" };
+      } catch {
+        return { error: "There was an error.  Please try again." };
+      }
+    }
+  },
+  getters: {
+    user(state) {
+      return state.user;
+    },
+    token(state) {
+      return state.user ? state.user.token : "";
+    },
+    role(state) {
+      return state.user ? state.user.role : "";
+    },
+    userIsAuthenticated(state) {
+      console.log(state.user)
+      return !!state.user
+    }
+  }
 };

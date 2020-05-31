@@ -15,6 +15,9 @@ class AuthService {
             confirmPassword: data.confirmPassword
         });
     }
+    static logout(){
+        return client.instance(true).post('/auth/logout');
+    }
 
     static me() {
         return client.instance(true).get('/auth/me');
