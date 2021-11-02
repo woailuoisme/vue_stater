@@ -16,7 +16,7 @@
     "izitoast": "^1.4.0",
     "lodash": "^4.17.15",
     "swiper": "^5.4.1",
-    "tinymce": "^5.2.2",
+    "tinymce": "^5.10.0",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^4.1.1",
     "vue-chartjs": "^3.5.0",
